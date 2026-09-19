@@ -26,9 +26,6 @@ export default function EntryEditor({ entry, onChange, onDelete, onBack, onExpor
           value={entry.date}
           onChange={(e) => e.target.value && onChange({ date: e.target.value })}
         />
-        <button type="button" className="export-button" onClick={onExport} disabled={exporting}>
-          {exporting ? 'Exporting…' : 'Export PDF'}
-        </button>
         <button type="button" className="danger" onClick={handleDelete}>
           Delete
         </button>

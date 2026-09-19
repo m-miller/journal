@@ -2,12 +2,10 @@ import express from 'express';
 import { readFile } from 'node:fs/promises';
 import { pool } from './db.js';
 import { deleteEntryImages, imagesRouter } from './images.js';
-import { exportRouter } from './exportPdf.js';
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));
 app.use('/api/images', imagesRouter);
-app.use('/api/export', exportRouter);
 
 const COLUMNS = 'id, entry_date, title, body, mood, tags, prompt, created_at, updated_at';
 

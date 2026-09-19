@@ -11,7 +11,6 @@ export default defineConfig(({ mode }) => {
         // Journal API (Express + PostgreSQL in /server).
         '/api/entries': `http://localhost:${env.PORT || 3001}`,
         '/api/images': `http://localhost:${env.PORT || 3001}`,
-        '/api/export': `http://localhost:${env.PORT || 3001}`,
         // Browser calls /api/anthropic/... and the dev server forwards it to the
         // Anthropic API with your key attached, so the key never reaches the browser.
         // Dev only: for production, replace this with an endpoint on your own backend.

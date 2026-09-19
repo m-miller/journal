@@ -57,33 +57,3 @@ export async function uploadImage(entryId, file) {
   }
   return res.json();
 }
-
-// Asks the server for a PDF of the given entries and downloads it.
-export async function exportPdf(ids) {
-  const res = await fetch('/api/export/pdf', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ ids }),
-  });
-
-  if (!res.ok) {
-    let message = '';
-    try {
-      message = (await res.json()).error || '';
-    } catch {
-      // response body was not JSON
-    }
-    throw new Error(message || `Export failed (error ${res.status}).`);
-  }
-
-  const fileName =
-    /filename="([^"]+)"/.exec(res.headers.get('content-disposition') || '')?.[1] || 'journal.pdf';
-  const url = URL.createObjectURL(await res.blob());
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}

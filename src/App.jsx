@@ -31,9 +31,6 @@ export default function App() {
   const [activeTag, setActiveTag] = useState(null);
   const [status, setStatus] = useState('loading'); // 'loading' | 'ready' | 'error'
   const [error, setError] = useState('');
-  const [selecting, setSelecting] = useState(false); // choosing entries to export
-  const [checkedIds, setCheckedIds] = useState(() => new Set());
-  const [exporting, setExporting] = useState(false);
 
   // id -> { changes, timer } for edits waiting to be sent
   const pendingEdits = useRef(new Map());
@@ -129,40 +126,6 @@ export default function App() {
     pendingEdits.current.set(id, pending);
   }
 
-  // Saves any unsent edits to these entries, then downloads them as one PDF.
-  async function exportEntries(ids) {
-    setExporting(true);
-    setError('');
-    try {
-      await Promise.all(ids.map((id) => flushEdits(id)));
-      await api.exportPdf(ids);
-      return true;
-    } catch (err) {
-      setError(`Couldn't export the PDF. ${err.message}`);
-      return false;
-    } finally {
-      setExporting(false);
-    }
-  }
-
-  function toggleChecked(id) {
-    setCheckedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }
-
-  function stopSelecting() {
-    setSelecting(false);
-    setCheckedIds(new Set());
-  }
-
-  async function exportChecked() {
-    const ids = entries.filter((e) => checkedIds.has(e.id)).map((e) => e.id);
-    if (ids.length > 0 && (await exportEntries(ids))) stopSelecting();
-  }
   function deleteEntry(id) {
     const pending = pendingEdits.current.get(id);
     if (pending) {
@@ -172,12 +135,6 @@ export default function App() {
 
     setEntries((prev) => prev.filter((e) => e.id !== id));
     setSelectedId(null);
-    setCheckedIds((prev) => {
-      if (!prev.has(id)) return prev;
-      const next = new Set(prev);
-      next.delete(id);
-      return next;
-    });
 
     Promise.resolve(pendingCreates.current.get(id))
       .then(() => api.deleteEntry(id))
@@ -197,13 +154,6 @@ export default function App() {
         tags={allTags}
         activeTag={activeTag}
         onTagChange={setActiveTag}
-        selecting={selecting}
-        checkedIds={checkedIds}
-        onToggleChecked={toggleChecked}
-        onStartSelecting={() => setSelecting(true)}
-        onStopSelecting={stopSelecting}
-        onExportChecked={exportChecked}
-        exporting={exporting}
       />
 
       <main className="main">
@@ -226,8 +176,6 @@ export default function App() {
             entry={selected}
             onChange={(changes) => updateEntry(selected.id, changes)}
             onDelete={() => deleteEntry(selected.id)}
-            onExport={() => exportEntries([selected.id])}
-            exporting={exporting}
             onBack={() => setSelectedId(null)}
           />
         ) : (

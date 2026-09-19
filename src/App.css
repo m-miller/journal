@@ -348,16 +348,3 @@ button.danger { color: var(--danger); background: transparent; }
 .image-resize-handle.on-left { right: auto; left: -7px; cursor: nesw-resize; }
 .image-status { display: flex; gap: 0.75rem; align-items: baseline; font-size: 0.9rem; color: var(--ink-soft); margin: -0.5rem 0 1rem; }
 .image-status.error { color: var(--danger); }
-
-/* PDF export: editor button, and selecting entries in the sidebar */
-.editor-toolbar .export-button { margin-left: auto; }
-.editor-toolbar .export-button + .danger { margin-left: 0; }
-
-.export-bar { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-.export-count { flex-basis: 100%; font-size: 0.9rem; color: var(--ink-soft); }
-
-.entry-item-content { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
-.entry-item-selectable { flex-direction: row; align-items: flex-start; gap: 0.65rem; cursor: pointer; }
-.entry-item-selectable:hover { background: var(--surface); }
-.entry-item-checked { background: var(--surface); }
-.entry-checkbox { margin-top: 0.2rem; width: 1rem; height: 1rem; accent-color: var(--accent); flex: none; }
