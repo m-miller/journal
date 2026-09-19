@@ -25,39 +25,10 @@ export function randomBuiltInPrompt(exclude) {
 }
 
 // Model used for generated prompts. Change here if you prefer another Claude model.
-const MODEL = 'claude-haiku-4-5-20251001';
-
+// Asks the server for a Claude-generated prompt (see server/prompt.js).
 export async function fetchAIPrompt() {
-  const res = await fetch('/api/anthropic/v1/messages', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: 200,
-      system:
-        'You write journaling prompts. Reply with exactly one prompt: a single open-ended question or invitation to reflect, under 30 words. No preamble, no quotation marks.',
-      messages: [{ role: 'user', content: 'Give me one fresh journaling prompt.' }],
-    }),
-  });
-
-  if (!res.ok) {
-    let detail = '';
-    try {
-      const data = await res.json();
-      detail = data?.error?.message || '';
-    } catch {
-      // response body was not JSON
-    }
-    throw new Error(`Claude didn't return a prompt (error ${res.status}). ${detail}`.trim());
-  }
-
-  const data = await res.json();
-  const text = (data.content || [])
-    .filter((block) => block.type === 'text')
-    .map((block) => block.text)
-    .join('')
-    .trim();
-
-  if (!text) throw new Error('Claude returned an empty prompt. Try again.');
-  return text;
+  const res = await fetch('/api/prompt', { method: 'POST' });
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new Error(data?.error || `Claude didn't return a prompt (error ${res.status}).`);
+  return data.prompt;
 }

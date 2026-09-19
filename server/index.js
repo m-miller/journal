@@ -1,11 +1,20 @@
 import express from 'express';
 import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { pool } from './db.js';
 import { deleteEntryImages, imagesRouter } from './images.js';
 
 const app = express();
+
+// For the hosting platform's health check. Placed before the login check; reveals nothing.
+app.get('/healthz', (req, res) => res.send('ok'));
+
+app.use(cloudflareAccess());
 app.use(express.json({ limit: '1mb' }));
+app.use('/api/prompt', promptRouter);
 app.use('/api/images', imagesRouter);
+import { promptRouter } from './prompt.js';
+import { cloudflareAccess } from './cloudflareAccess.js';
 
 const COLUMNS = 'id, entry_date, title, body, mood, tags, prompt, created_at, updated_at';
 
@@ -113,6 +122,9 @@ app.delete('/api/entries/:id', async (req, res) => {
   await deleteEntryImages(req.params.id);
   res.status(204).end();
 });
+
+// The built frontend (`npm run build` puts it in /dist). In development, Vite serves it instead.
+app.use(express.static(fileURLToPath(new URL('../dist', import.meta.url))));
 
 // Express 5 forwards errors from async handlers here.
 app.use((err, req, res, next) => {

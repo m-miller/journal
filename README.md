@@ -103,7 +103,7 @@ vite.config.js      Dev server, including the API and Claude proxies
 
 ## How data is stored
 
-- Entry text is saved as the editor's JSON document, stored as text in the `body` column. Entries written before the formatting editor was added are plain text; they're converted when opened and saved in the new format on their first edit.
+- Entry text is saved as the editor's JSON document, stored as text in the `body` column.
 - Edits are sent to the server half a second after you stop typing. Closing the tab within that half second can lose the last few keystrokes.
 
 ## Development notes
@@ -114,8 +114,6 @@ vite.config.js      Dev server, including the API and Claude proxies
 ## PDF export (separate branch)
 
 PDF export lives on its own branch and isn't part of main. It adds an Export PDF button to the editor and a way to select several entries in the sidebar and export them as one PDF (one entry per page, oldest first, with the date and mood under each title). It uses Puppeteer, which renders the PDF with a headless copy of Chrome.
-
-The examples below call the branch `pdf-export`; use your branch's actual name.
 
 **Keeping it up to date.** Merge main into the export branch from time to time (or merge each feature branch into both), so it doesn't fall behind:
 
@@ -144,5 +142,3 @@ git log --oneline main..pdf-export
    ```
 
 4. Restart `npm run server` and `npm run dev`.
-
-PDFs are A4 by default; change `format: 'A4'` to `format: 'Letter'` in `server/exportPdf.js` for US Letter.
