@@ -103,7 +103,7 @@ vite.config.js      Dev server, including the API and Claude proxies
 
 ## How data is stored
 
-- Entry text is saved as the editor's JSON document, stored as text in the `body` column. Entries written before the formatting editor was added are plain text; they're converted when opened and saved in the new format on their first edit.
+- Entry text is saved as the editor's JSON document, stored as text in the `body` column.
 - Edits are sent to the server half a second after you stop typing. Closing the tab within that half second can lose the last few keystrokes.
 
 ## Development notes
