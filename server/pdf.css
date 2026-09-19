@@ -1,0 +1,45 @@
+/* Styles for exported PDFs. Page size and margins are set in exportPdf.js. */
+html, body { margin: 0; padding: 0; background: #fff; }
+body {
+  font-family: 'Literata', Georgia, 'Times New Roman', serif;
+  font-size: 11pt;
+  line-height: 1.55;
+  color: #1d2b3a;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.entry { display: flow-root; } /* keeps wrapped images inside their entry */
+.entry + .entry { break-before: page; }
+h1 { font-size: 22pt; line-height: 1.2; margin: 0 0 0.2em; }
+h2 { font-size: 15pt; margin: 1.2em 0 0.3em; }
+h3 { font-size: 12.5pt; margin: 1.1em 0 0.3em; }
+h1, h2, h3 { break-after: avoid; }
+.entry-meta {
+  font-family: 'Public Sans', Helvetica, Arial, sans-serif;
+  font-size: 9.5pt;
+  color: #5b6878;
+  margin: 0 0 1.4em;
+}
+p { margin: 0 0 0.6em; }
+
+.align-center { text-align: center; }
+.align-right { text-align: right; }
+.align-justify { text-align: justify; }
+.indent { text-indent: 2em; }
+
+a { color: #2b4f7e; }
+code { font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 0.9em; }
+pre { white-space: pre-wrap; background: #f1f3ee; padding: 0.6em 0.8em; border-radius: 4px; font-size: 9.5pt; }
+blockquote { margin: 0.6em 0; padding-left: 1em; border-left: 3px solid #cfd6cf; color: #5b6878; }
+ul, ol { padding-left: 1.5em; }
+hr { border: none; border-top: 1px solid #cfd6cf; margin: 1.2em 0; }
+
+figure.image { margin: 0.4em 0 0.8em; break-inside: avoid; }
+figure.image img { display: block; max-width: 100%; height: auto; border-radius: 4px; }
+figure.image[style] img { width: 100%; }
+figure.position-center { margin-left: auto; margin-right: auto; }
+figure.position-center img { margin: 0 auto; }
+figure.position-wrapLeft { float: left; margin: 0.2em 1.2em 0.6em 0; }
+figure.position-wrapRight { float: right; margin: 0.2em 0 0.6em 1.2em; }
+.missing-image { color: #9b3b3b; font-style: italic; }
