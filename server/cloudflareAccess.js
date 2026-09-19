@@ -1,14 +1,13 @@
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 
 // Cloudflare Access adds a signed token (the Cf-Access-Jwt-Assertion header) to every
-// request it lets through. Checking it here means the app only answers requests that
-// passed your Cloudflare login, so the onrender.com address can't be used to skip it.
+// request it lets through.
 //
 // Enabled when CF_ACCESS_TEAM_DOMAIN and CF_ACCESS_AUD are set. In production
 // (NODE_ENV=production) the server refuses to start without them.
 export function cloudflareAccess() {
-  const teamDomain = process.env.CF_ACCESS_TEAM_DOMAIN?.replace(/\/+$/, ''); // e.g. https://yourteam.cloudflareaccess.com
-  const audience = process.env.CF_ACCESS_AUD; // the application's "Application Audience (AUD) Tag"
+  const teamDomain = process.env.CF_ACCESS_TEAM_DOMAIN?.replace(/\/+$/, ''); 
+  const audience = process.env.CF_ACCESS_AUD; 
 
   if (!teamDomain || !audience) {
     if (process.env.NODE_ENV === 'production') {
