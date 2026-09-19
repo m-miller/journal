@@ -144,5 +144,3 @@ git log --oneline main..pdf-export
    ```
 
 4. Restart `npm run server` and `npm run dev`.
-
-PDFs are A4 by default; change `format: 'A4'` to `format: 'Letter'` in `server/exportPdf.js` for US Letter.
