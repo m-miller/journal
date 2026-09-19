@@ -115,8 +115,6 @@ vite.config.js      Dev server, including the API and Claude proxies
 
 PDF export lives on its own branch and isn't part of main. It adds an Export PDF button to the editor and a way to select several entries in the sidebar and export them as one PDF (one entry per page, oldest first, with the date and mood under each title). It uses Puppeteer, which renders the PDF with a headless copy of Chrome.
 
-The examples below call the branch `pdf-export`; use your branch's actual name.
-
 **Keeping it up to date.** Merge main into the export branch from time to time (or merge each feature branch into both), so it doesn't fall behind:
 
 ```bash
