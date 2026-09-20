@@ -28,9 +28,6 @@ export default function PromptBar({ onUse, useLabel }) {
       <p className="prompt-text" aria-live="polite">{prompt}</p>
       <div className="prompt-actions">
         <button type="button" onClick={nextBuiltIn}>Show another</button>
-        <button type="button" onClick={askClaude} disabled={loading}>
-          {loading ? 'Asking Claude…' : 'Ask Claude for one'}
-        </button>
         <button type="button" className="primary" onClick={() => onUse(prompt)}>
           {useLabel}
         </button>
