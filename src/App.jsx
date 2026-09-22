@@ -80,11 +80,12 @@ export default function App() {
     const entry = {
       id: newId(),
       date: todayISO(),
+      title: prompt,
       title: '',
       body: '',
       mood: null,
       tags: [],
-      prompt,
+      prompt: '',
       createdAt: now,
       updatedAt: now,
     };

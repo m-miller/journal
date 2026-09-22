@@ -58,7 +58,9 @@ export default function EntryEditor({ entry, onChange, onDelete, onBack, onExpor
         <PromptBar
           useLabel="Use this prompt"
           onUse={(prompt) => {
-            onChange({ prompt });
+            // The prompt becomes the title, unless the entry already has one.
+            if (entry.title.trim()) onChange({ prompt });
+            else onChange({ title: prompt });
             setShowPrompts(false);
           }}
         />
