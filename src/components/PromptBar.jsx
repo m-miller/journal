@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { fetchAIPrompt, randomBuiltInPrompt } from '../prompts.js';
 
-export default function PromptBar({ onUse, useLabel }) {
+// `onDismiss` is optional; when given, a Dismiss button closes the prompt section.
+export default function PromptBar({ onUse, useLabel, onDismiss }) {
   const [prompt, setPrompt] = useState(() => randomBuiltInPrompt());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -31,6 +32,11 @@ export default function PromptBar({ onUse, useLabel }) {
         <button type="button" className="primary" onClick={() => onUse(prompt)}>
           {useLabel}
         </button>
+        {onDismiss && (
+          <button type="button" onClick={onDismiss}>
+            Dismiss
+          </button>
+        )}
       </div>
       {error && <p className="error" role="alert">{error}</p>}
     </section>
