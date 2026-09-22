@@ -81,7 +81,6 @@ export default function App() {
       id: newId(),
       date: todayISO(),
       title: prompt,
-      title: '',
       body: '',
       mood: null,
       tags: [],
